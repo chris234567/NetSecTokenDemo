@@ -1,5 +1,8 @@
 Beispiel zur Demo von Accesstoken mit JWT
 
+Zum Ausprobieren einfach das Repo ziehen und im Ordner "docker compose up"
+(Vorraussetzungen: Docker)
+
 Komponenten
  - Nginx Proxy: zum Routing der Anfragen zwischen frontend und backend
  - Flask Backend: Zum Einloggen der User, Austellen der Tokens und Verarbeitung der API Anfragen auf User Ressourcen
