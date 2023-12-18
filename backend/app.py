@@ -17,8 +17,8 @@ with open('config.json') as config_file:
     SECRET_KEY = config['SECRET_KEY']
 
 mongo = pymongo.MongoClient("mongodb://mongo:27017")
-mongo.drop_database("SecureQuestionnaire") 
-DB = mongo["SecureQuestionnaire"]
+mongo.drop_database("NetSecDemo") 
+DB = mongo["NetSecDemo"]
 
 # Create demo user
 DB["user"].insert_one({
@@ -81,7 +81,7 @@ def login():
         {
             'sub': user["username"],
             'iat': datetime.utcnow(),
-            'exp': datetime.utcnow() + timedelta(minutes=30)
+            'exp': datetime.utcnow() + timedelta(seconds=10)
         },
         SECRET_KEY,
         algorithm="HS256"
@@ -90,6 +90,7 @@ def login():
     response = { "token": token }
 
     return Response(response=json.dumps(response), status=status, mimetype="application/json")
+
 
 @app.route("/api/user", methods=["GET"])
 @token_required
@@ -102,19 +103,32 @@ def user():
 if __name__ == "__main__":
     app.run()
 
+
 @app.route("/api/count", methods=["GET", "PUT"])
 @token_required
 def count():
     users = DB["user"]
 
+    # Extract user from token
+    token = request.headers.get('Authorization', '').split()[1]
+    data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+    authorized_user = data["sub"]
+    
+    requested_user = request.get_json()["username"] if request.method == "PUT" else request.args.get("username")
+
+    if requested_user != authorized_user:
+        # Browser moechte auf count von user zugreifen fuer den er gar nicht authorisiert ist
+        return Response(response=json.dumps("not authorized"), status=400, mimetype="application/json")
+
     if request.method == "GET":
-        count = users.find_one({ "username": request.args.get("username") })["count"]
+        count = users.find_one({ "username": authorized_user })["count"]
 
         return Response(response=json.dumps(count), status=200, mimetype="application/json")
 
     elif request.method == "PUT":
-        user = users.find_one({ "username": request.get_json()["username"] })
-        users.delete_one({ "username": request.get_json()["username"] })
+        user = users.find_one({ "username": authorized_user })
+        users.delete_one({ "username": authorized_user })
+
         # Increment gift count
         user["count"] += 1
         users.insert_one(user)
