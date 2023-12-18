@@ -18,5 +18,5 @@ Zum Ausprobieren einfach das Repo ziehen und im Ordner "docker compose up"
 
 Der Flow/Grant aehnelt am ehesten dem Client Credentials Flow & Implicit Grant von OAuth 2.0.
 
-<span style="color: red">Achtung!</span> Bei dem Beispiel wurde Sichherheit zum Zweck der Anschaulichkeit ausser Acht gelassen.
+**Achtung!** Bei dem Beispiel wurde Sichherheit zum Zweck der Anschaulichkeit ausser Acht gelassen. <br>
 (Token sollten zum Beispiel nie im Local/Session Storage geseichert werden, da Sie dort per XSS ausgelesen werden koennten)
