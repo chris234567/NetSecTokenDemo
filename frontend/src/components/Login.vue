@@ -10,7 +10,7 @@
     <button @click="login()">Login</button>
 
     <div>
-        {{ this.loggedInUser }} möchte {{ this.giftCount }} Geschenke zu Weihnachten haben! wow...
+        {{ this.loggedInUser }} möchte {{ this.giftCount }} Geschenke zu Weihnachten haben!
     </div>
 
     <button @click="increment()">Mehr!</button>
@@ -23,12 +23,15 @@ export default {
     mounted: function () {
         this.$store.dispatch('getUser')
         .then((user) => { 
-            this.loggedInUser = user;
+            this.loggedInUser = user
 
             this.$store.dispatch('getCount', { 
                 username: user
             })
             .then((count) => { this.giftCount = count })
+        }).catch(() => {
+            this.loggedInUser = "[UNDEFINED]"
+            this.giftCount = "[UNDEFINED]"
         })
     },
     components: { },
