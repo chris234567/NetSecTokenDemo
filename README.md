@@ -3,7 +3,7 @@
 Zum Ausprobieren einfach das Repo ziehen und im Ordner "docker compose up"
 
 #### Komponenten
- - Nginx Proxy: zum Routing der Anfragen zwischen frontend und backend
+ - Nginx Proxy: Zum Routing der Anfragen zwischen Frontend und Backend
  - Flask Backend: Zum Einloggen der User, Austellen der Tokens und Verarbeitung der API-Anfragen auf User-Ressourcen
  - Vue Frontend: Zum Einloggen & Anzeigen/Verändern der User Ressourcen via API-Anfragen
 
