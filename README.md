@@ -1,6 +1,7 @@
 ### Beispiel zur Demo von Accesstoken mit JWT
 
-Zum Ausprobieren einfach das Repo ziehen und im Ordner "docker compose up"
+Zum Ausprobieren einfach das Repo ziehen und im Ordner "docker compose up".
+Die Login-Seite ist unter http://localhost:8080 zu erreichen.
 
 #### Komponenten
  - Nginx Proxy: Zum Routing der Anfragen zwischen Frontend und Backend
